@@ -13,7 +13,7 @@ edition = "2018"
 
 [dependencies]
 astcenc-sys = {git = "https://github.com/Traverse-Research/astcenc-sys", rev="1af714a"}
-bitflags = "2.6"
+bitflags = "2"
 half = "2.4"
 
 [dev-dependencies]
