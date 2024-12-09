@@ -18,3 +18,4 @@ half = "1.6"
 
 [dev-dependencies]
 rand = "0.8.5"
+image = {version="0.25", default-features = false, features = ["png"]}
