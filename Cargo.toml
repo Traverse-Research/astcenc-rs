@@ -12,7 +12,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-astcenc-sys = "0.1"
+astcenc-sys = {git = "https://github.com/Traverse-Research/astcenc-sys", rev="1af714a"}
 bitflags = "1.2"
 half = "1.6"
 
