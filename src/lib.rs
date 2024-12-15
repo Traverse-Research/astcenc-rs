@@ -654,7 +654,7 @@ impl Context {
 
 bitflags::bitflags! {
     /// Configuration flags for the context.
-    #[derive(Clone)]
+    #[derive(Clone, Copy, Debug)]
     pub struct Flags: std::os::raw::c_uint {
         /// Treat the image as a 2-component normal map for the purposes of error calculation.
         /// Z will always be recalculated.
