@@ -180,6 +180,7 @@ pub struct ConfigBuilder {
     profile: Profile,
     preset: Preset,
     block_size: Extents,
+    flags: Flags
 }
 
 impl Default for ConfigBuilder {
@@ -188,6 +189,7 @@ impl Default for ConfigBuilder {
             profile: Profile::default(),
             preset: Preset::default(),
             block_size: Extents::default_block_size(),
+            flags: Flags::default()
         }
     }
 }
@@ -240,6 +242,18 @@ impl ConfigBuilder {
         self
     }
 
+    /// Set a flag to be used by the context.
+    pub fn flag(&mut self, flag: Flags) -> &mut Self {
+        self.flags |= flag;
+        self
+    }
+
+    /// Set a flag to be used by the context.
+    pub fn with_flag(mut self, flag: Flags) -> Self {
+        self.flag(flag);
+        self
+    }
+
     /// Create the config from these settings.
     pub fn build(self) -> Result<Config, Error> {
         let mut cfg: MaybeUninit<astcenc_sys::astcenc_config> = MaybeUninit::uninit();
@@ -251,7 +265,7 @@ impl ConfigBuilder {
                 self.block_size.y,
                 self.block_size.z,
                 self.preset.0,
-                Flags::default().into_sys(),
+                self.flags.into_sys(),
                 cfg.as_mut_ptr(),
             )
         })?;
@@ -640,6 +654,7 @@ impl Context {
 
 bitflags::bitflags! {
     /// Configuration flags for the context.
+    #[derive(Clone)]
     pub struct Flags: std::os::raw::c_uint {
         /// Treat the image as a 2-component normal map for the purposes of error calculation.
         /// Z will always be recalculated.
