@@ -180,7 +180,7 @@ pub struct ConfigBuilder {
     profile: Profile,
     preset: Preset,
     block_size: Extents,
-    flags: Flags
+    flags: Flags,
 }
 
 impl Default for ConfigBuilder {
@@ -189,7 +189,7 @@ impl Default for ConfigBuilder {
             profile: Profile::default(),
             preset: Preset::default(),
             block_size: Extents::default_block_size(),
-            flags: Flags::default()
+            flags: Flags::default(),
         }
     }
 }
@@ -242,15 +242,15 @@ impl ConfigBuilder {
         self
     }
 
-    /// Set a flag to be used by the context.
-    pub fn flag(&mut self, flag: Flags) -> &mut Self {
-        self.flags |= flag;
+    /// Set flag to be used by the context.
+    pub fn flags(&mut self, flags: Flags) -> &mut Self {
+        self.flags |= flags;
         self
     }
 
-    /// Set a flag to be used by the context.
-    pub fn with_flag(mut self, flag: Flags) -> Self {
-        self.flag(flag);
+    /// Set flags to be used by the context.
+    pub fn with_flags(mut self, flags: Flags) -> Self {
+        self.flags(flags);
         self
     }
 
@@ -684,11 +684,9 @@ bitflags::bitflags! {
     }
 }
 
-impl Drop for Context{
+impl Drop for Context {
     fn drop(&mut self) {
-        unsafe{
-            astcenc_sys::astcenc_context_free(self.inner.as_ptr())
-        };
+        unsafe { astcenc_sys::astcenc_context_free(self.inner.as_ptr()) };
     }
 }
 
